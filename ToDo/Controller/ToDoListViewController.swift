@@ -11,27 +11,12 @@ import UIKit
 class ToDoListViewController: UITableViewController {
 
     var itemArray=[Item]()
-    let defaults=UserDefaults.standard
+     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let newItem=Item()
-        newItem.title="Shopping"
-        newItem.done=false
-        let newItem1=Item()
-        newItem1.title="Travelling"
-        newItem1.done=false
-        let newItem2=Item()
-        newItem2.title="Swimming"
-        newItem2.done=false
-        itemArray.append(newItem)
-        itemArray.append(newItem1)
-        itemArray.append(newItem2)
-        
-        if let items=defaults.array(forKey: "TodoListArray") as? [Item] {
-            itemArray = items
-        }
+        loadItems()
+        tableView.reloadData()
         
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,27 +26,24 @@ class ToDoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell=tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
-        cell.textLabel?.text=itemArray[indexPath.row].title
         
-        cell.accessoryType = itemArray[indexPath.row].done == true ? .checkmark : .none
-        //the above statement means below if condition
-//        if itemArray[indexPath.row].done == true {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
+        cell.textLabel?.text = itemArray[indexPath.row].title
+        
+        cell.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
         //the above statement means below if condition
 //        if itemArray[indexPath.row].done == false {
 //            itemArray[indexPath.row].done = true
 //        } else {
 //            itemArray[indexPath.row].done = false
 //        }
+        saveData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -76,8 +58,7 @@ class ToDoListViewController: UITableViewController {
             newItem.done=false
             
             self.itemArray.append(newItem)
-            self.defaults.set(self.itemArray, forKey: "TodoListArray ")
-            self.tableView.reloadData()
+            self.saveData()
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder="enter a todo item"
@@ -85,6 +66,29 @@ class ToDoListViewController: UITableViewController {
         }
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func loadItems(){
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error in decoding: \(error)")
+            }
+            
+        }
+    }
+    
+    func saveData(){
+        let encoder=PropertyListEncoder()
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding item array:\(error)")
+        }
+        tableView.reloadData()
     }
 }
 
