@@ -23,7 +23,8 @@ class ToDoListViewController: UITableViewController{
         
     }
     
-    //MARK: TABLE VIEW METHODS
+    //MARK: TableView DataSource methods
+   
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
@@ -38,6 +39,7 @@ class ToDoListViewController: UITableViewController{
         return cell
     }
     
+     //MARK: TABLEVIEW DELEGATE METHODS
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //these two lines will actually delete data from database
@@ -57,7 +59,7 @@ class ToDoListViewController: UITableViewController{
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    //MARK: Add item
+    //MARK: Add item 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var varText = UITextField()
         let alert = UIAlertController(title: "Add a Todo", message: "", preferredStyle: .alert)
@@ -79,6 +81,7 @@ class ToDoListViewController: UITableViewController{
         present(alert, animated: true, completion: nil)
     }
     
+    //MARK: Model Manipulation methods
     func saveData(){
         
         do {
