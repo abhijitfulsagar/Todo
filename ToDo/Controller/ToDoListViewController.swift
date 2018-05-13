@@ -115,5 +115,19 @@ extension ToDoListViewController:UISearchBarDelegate{
        loadItems(with: request)
       
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            //this will select the main thread
+            DispatchQueue.main.async {
+                 //this tells that searchbar should not be the currently selected and the cursor in the search bar goes away
+                searchBar.resignFirstResponder()
+            }
+           
+            
+        }
+    }
 }
 
