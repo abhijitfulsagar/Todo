@@ -9,7 +9,7 @@
 import UIKit
 import  CoreData
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: UITableViewController{
 
     var itemArray=[Item]()
    
@@ -22,6 +22,8 @@ class ToDoListViewController: UITableViewController {
         tableView.reloadData()
         
     }
+    
+    //MARK: TABLE VIEW METHODS
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
@@ -38,6 +40,11 @@ class ToDoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        //these two lines will actually delete data from database
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
+        
+        //this line toggle the checkmark
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         //the above statement means below if condition
@@ -50,7 +57,7 @@ class ToDoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    //MARK -Add item 
+    //MARK: Add item
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var varText = UITextField()
         let alert = UIAlertController(title: "Add a Todo", message: "", preferredStyle: .alert)
@@ -82,16 +89,31 @@ class ToDoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadItems(){
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
+    func loadItems(with request:NSFetchRequest<Item>=Item.fetchRequest()){
         do {
             itemArray = try context.fetch(request)
         } catch {
             print("Error in Fetching: \(error)")
         }
-        
+          tableView.reloadData()
     }
     
+    
    
+}
+
+//MARK: SEARCH BAR METHODS
+extension ToDoListViewController:UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request :NSFetchRequest<Item>=Item.fetchRequest()
+        
+        //check NSPredicate on google.
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+      
+       loadItems(with: request)
+      
+    }
 }
 
