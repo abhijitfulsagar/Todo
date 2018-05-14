@@ -52,13 +52,23 @@ class CategoryViewController: UITableViewController {
         tableView.reloadData()
     }
     //MARK: TableView Delegate methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "gotoItems", sender: self)
+    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ToDoListViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categories[indexPath.row]
+        }
+        
+    }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField=UITextField()
         let alert=UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         let action=UIAlertAction(title: "Add", style: .default) { (action) in
-            var newCategoryItem = Category(context: self.context)
+            let newCategoryItem = Category(context: self.context)
             newCategoryItem.name = textField.text!
             
             self.categories.append(newCategoryItem)
