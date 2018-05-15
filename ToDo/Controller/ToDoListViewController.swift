@@ -53,7 +53,10 @@ class ToDoListViewController: UITableViewController{
         if let item = todoItems?[indexPath.row] {
             do {
                 try self.realm.write {
+                    //this will toggle the done property
                     item.done = !item.done
+                    //this will delete the item form database
+                    //realm.delete(item)
                 }
             }catch{
                 print("Error occured:\(error)")
@@ -74,6 +77,7 @@ class ToDoListViewController: UITableViewController{
                         try self.realm.write {
                             let newItem = Item()
                             newItem.title=varText.text!
+                            newItem.dateCreated = Date()
                             currentCategory.items.append(newItem)
                         }
                     }catch{
@@ -103,31 +107,26 @@ class ToDoListViewController: UITableViewController{
 }
 
 //MARK: SEARCH BAR METHODS
-//extension ToDoListViewController:UISearchBarDelegate{
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        let request :NSFetchRequest<Item>=Item.fetchRequest()
-//
-//        //check NSPredicate on google.
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//       loadItems(with: request,predicate: predicate)
-//
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0 {
-//            loadItems()
-//
-//            //this will select the main thread
-//            DispatchQueue.main.async {
-//                 //this tells that searchbar should not be the currently selected and the cursor in the search bar goes away
-//                searchBar.resignFirstResponder()
-//            }
-//
-//
-//        }
-//    }
-//}
-//
+extension ToDoListViewController:UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+
+            //this will select the main thread
+            DispatchQueue.main.async {
+                 //this tells that searchbar should not be the currently selected and the cursor in the search bar goes away
+                searchBar.resignFirstResponder()
+            }
+
+
+        }
+    }
+}
+
+
