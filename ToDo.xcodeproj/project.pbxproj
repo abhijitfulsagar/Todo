@@ -14,6 +14,7 @@
 		7C54E83C2077FA7F00B63876 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C54E83A2077FA7F00B63876 /* Main.storyboard */; };
 		7C54E83E2077FA7F00B63876 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C54E83D2077FA7F00B63876 /* Assets.xcassets */; };
 		7C54E8412077FA7F00B63876 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C54E83F2077FA7F00B63876 /* LaunchScreen.storyboard */; };
+		7C71BD0720AB9A6F000A9B9A /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C71BD0620AB9A6F000A9B9A /* SwipeTableViewController.swift */; };
 		7CA9ED1820A9E470000F1A76 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA9ED1720A9E470000F1A76 /* Item.swift */; };
 		7CA9ED1A20A9E47B000F1A76 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA9ED1920A9E47B000F1A76 /* Category.swift */; };
 /* End PBXBuildFile section */
@@ -27,6 +28,7 @@
 		7C54E83D2077FA7F00B63876 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C54E8402077FA7F00B63876 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7C54E8422077FA7F00B63876 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7C71BD0620AB9A6F000A9B9A /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		7CA9ED1720A9E470000F1A76 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		7CA9ED1920A9E47B000F1A76 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		BC3D9A23F1AC5A1AA6A97A32 /* Pods_ToDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 		7CA6F12A20802D5700D04E50 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7C71BD0620AB9A6F000A9B9A /* SwipeTableViewController.swift */,
 				7C477D1B20A8D63400BBD811 /* CategoryViewController.swift */,
 				7C54E8382077FA7F00B63876 /* ToDoListViewController.swift */,
 			);
@@ -267,6 +270,7 @@
 				7C54E8392077FA7F00B63876 /* ToDoListViewController.swift in Sources */,
 				7C54E8372077FA7F00B63876 /* AppDelegate.swift in Sources */,
 				7CA9ED1A20A9E47B000F1A76 /* Category.swift in Sources */,
+				7C71BD0720AB9A6F000A9B9A /* SwipeTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
