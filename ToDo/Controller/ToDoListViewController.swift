@@ -50,20 +50,16 @@ class ToDoListViewController: UITableViewController{
      //MARK: TABLEVIEW DELEGATE METHODS
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //these two lines will actually delete data from database
-//        context.delete(itemArray[indexPath.row])
-//        itemArray.remove(at: indexPath.row)
-        
-        //this line toggle the checkmark
-      //  todoItems[indexPath.row].done = !todoItems[indexPath.row].done
-        
-        //the above statement means below if condition
-//        if itemArray[indexPath.row].done == false {
-//            itemArray[indexPath.row].done = true
-//        } else {
-//            itemArray[indexPath.row].done = false
-//        }
-       // saveData()
+        if let item = todoItems?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    item.done = !item.done
+                }
+            }catch{
+                print("Error occured:\(error)")
+            }
+        }
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
