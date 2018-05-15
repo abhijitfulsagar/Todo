@@ -85,12 +85,14 @@ class ToDoListViewController: UITableViewController{
                     }
                 }
             }
-           	self.tableView.reloadData()
+         let cancelAction=UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+        self.tableView.reloadData()
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder="enter a todo item"
             varText=alertTextField
         }
         alert.addAction(action)
+        alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
     

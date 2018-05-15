@@ -80,8 +80,8 @@
 		7CA6F12920802CC100D04E50 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				7CA9ED1720A9E470000F1A76 /* Item.swift */,
 				7CA9ED1920A9E47B000F1A76 /* Category.swift */,
+				7CA9ED1720A9E470000F1A76 /* Item.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -209,11 +209,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ToDo/Pods-ToDo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
