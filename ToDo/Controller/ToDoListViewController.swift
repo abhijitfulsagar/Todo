@@ -12,6 +12,7 @@ import ChameleonFramework
 
 class ToDoListViewController: SwipeTableViewController{
 
+    @IBOutlet weak var todoSearchBar: UISearchBar!
     var todoItems : Results<Item>?
     let realm = try! Realm()
     var selectedCategory : Category? {
@@ -22,12 +23,32 @@ class ToDoListViewController: SwipeTableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        print( FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist"))
+     //        print( FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist"))
         tableView.reloadData()
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let colorHex = selectedCategory?.color{
+            title = selectedCategory!.name
+            guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exists")}
+            if let navBarColor = UIColor(hexString:colorHex){
+                navBar.barTintColor = navBarColor
+                navBar.largeTitleTextAttributes=[NSAttributedStringKey.foregroundColor:ContrastColorOf(navBarColor, returnFlat: true)]
+                navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+                todoSearchBar.barTintColor = UIColor(hexString: colorHex)
+            }
+            
+            
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let originalColor = UIColor(hexString: "1D9BF6") else {fatalError()}
+        navigationController?.navigationBar.barTintColor = originalColor
+        navigationController?.navigationBar.tintColor = FlatWhite()
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:FlatWhite()]
+    }
     //MARK: TableView DataSource methods
    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
